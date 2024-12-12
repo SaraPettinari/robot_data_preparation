@@ -2,8 +2,8 @@ import csv
 import glob
 import os
 import shutil
-from generate_mrs_log import csv_to_xes, merge_xes
-from spatial_info import spatial_info
+from scripts.generate_mrs_log import csv_to_xes, merge_xes
+from scripts.spatial_info import spatial_info
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 # Destination path
