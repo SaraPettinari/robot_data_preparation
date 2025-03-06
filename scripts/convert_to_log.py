@@ -9,9 +9,6 @@ from pm4py.objects.log.exporter.xes import exporter as xes_exporter
 def csv_to_xes(path):
     name = path.split('\\')[-1].split('.')[0]
     data = pd.read_csv(path)
-    cols = ['time:timestamp', 'concept:name', 'lifecycle:transition',
-            'data:payload', 'x', 'y', 'z', 'case:concept:name']
-    data.columns = cols
     data['time:timestamp'] = pd.to_datetime(data['time:timestamp'])
     data['concept:name'] = data['concept:name'].astype(str)
 

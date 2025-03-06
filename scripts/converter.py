@@ -8,8 +8,9 @@ import glob
 
 current_path = os.path.dirname(os.path.realpath(__file__))
 
-robot_nss = ['drone_1', 'tractor_1', 'tractor_2', 'tractor_3']
-
+robot_nss = [
+    f for f in os.listdir(current_path) if os.path.isdir(os.path.join(current_path, f))
+]
 
 # ZLIB decodification
 def decode(time_instant, name_dest):
@@ -33,7 +34,6 @@ def decode(time_instant, name_dest):
 
     gazebo_log += '</xml>'
 
-    # w+ --> se il file non esiste lo crea e ci scrive
     file = open(name_dest + ".xml", "w+")
     file.write(gazebo_log)
     file.close()

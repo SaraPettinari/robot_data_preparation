@@ -11,22 +11,22 @@ def spatial_info(path):
         merge_data(folder)
 
 
-def find_nearest(odom_file, time: datetime):
-    with open(odom_file, 'r') as file_odomR:
-        csv_reader_odom = csv.reader(file_odomR, delimiter=',')
+def find_nearest(file, time: datetime):
+    with open(file, 'r') as this_file:
+        csv_reader_odom = csv.reader(this_file, delimiter=',')
         line_index = 0
         result = ''
         for row in csv_reader_odom:
             if line_index != 0:
-                odom_time = row[0]
-                if odom_time <= time:
+                time = row[0]
+                if time <= time:
                     result = row
                 else:
                     break
             line_index += 1
         return result
 
-
+'''
 def json_converter(row):
     x_val = row[1]
     y_val = row[2]
@@ -34,13 +34,15 @@ def json_converter(row):
     json = x_val + ', ' + y_val + ', ' + z_val
 
     return json
-
+'''
 
 
 def merge_data(folder_path):
     output_file = folder_path + '/merged.csv'
     macro_file = glob.glob(folder_path + '*/macro.csv', recursive=True)[0]
     odom_file = glob.glob(folder_path + '*/odom.csv', recursive=True)[0]
+    battery_file = glob.glob(folder_path + '*/battery.csv', recursive=True)[0]
+    
     line_index = 0
 
     with open(macro_file, 'r') as fileR, open(output_file, 'a') as fileW:
@@ -60,5 +62,9 @@ def merge_data(folder_path):
                 row.append(row_nearest[1])
                 row.append(row_nearest[2])
                 row.append(row_nearest[3])
+                
+                row_nearest_b = find_nearest(battery_file, time)
+                row.append(row_nearest_b)
+                
                 csv_writer.writerow(row)
             line_index += 1
