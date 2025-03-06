@@ -1,0 +1,3 @@
+[submodule "mrs_scenario"]
+	path = master
+	url = https://bitbucket.org/proslabteam/smart_agriculture_sim/src/master/
